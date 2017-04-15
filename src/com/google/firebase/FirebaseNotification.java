@@ -8,7 +8,18 @@ import java.util.List;
  */
 public abstract class FirebaseNotification
 {
-    public List<String> registratationIdList = new ArrayList<>();
+    FirebaseNotification firebaseNotification = null;
+    private static Configuratation configuratation = null;
+
+    public static Configuratation editConfiguration()
+    {
+        if(configuratation == null)
+        {
+            configuratation = new FirebaseConfiguration();
+        }
+        return configuratation;
+
+    }
 
 
 }
