@@ -21,5 +21,7 @@ public abstract class FirebaseNotification
 
     }
 
+    public abstract void sendNotification();
+
 
 }
