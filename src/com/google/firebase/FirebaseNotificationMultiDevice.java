@@ -1,9 +1,8 @@
 package com.google.firebase;
 
-import com.google.exceptions.IllegalDeviceId;
+import com.google.exceptions.IllegalDeviceIdException;
 
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -11,32 +10,21 @@ import java.util.List;
  */
 public class FirebaseNotificationMultiDevice extends FirebaseNotification
 {
-    List<String> arrayList = new ArrayList<String>();
 
-    FirebaseNotificationMultiDevice(String[] deviceIds) throws IllegalDeviceId
+    FirebaseNotificationMultiDevice(String apiKey) throws IllegalDeviceIdException
     {
-        if(deviceIds.length == 0)
-        {
-            throw  new IllegalDeviceId("Device array cannot be empty");
-        }
-        Collections.addAll(arrayList,deviceIds);
+        this.apikey = apiKey;
     }
 
-    FirebaseNotificationMultiDevice(List<String> deviceIds) throws IllegalDeviceId
-    {
-        if(deviceIds ==  null)
-        {
-            throw  new IllegalDeviceId("Device list cannot be null");
+    public void addDevice(Object deviceIds) throws IllegalDeviceIdException {
+
+        if(deviceIds instanceof List)
+            deviceList.addAll((List<String>)deviceIds);
+        else if(deviceIds instanceof String[]){
+            deviceList.addAll(Arrays.<String>asList((String[]) deviceIds));
+        } else {
+            throw new IllegalDeviceIdException("For multiple device ids, Ids should be inserted in List");
         }
-        if(deviceIds.size() == 0)
-        {
-            throw  new IllegalDeviceId("Device list cannot be empty");
-        }
-        arrayList = deviceIds;
     }
 
-    public void sendNotification()
-    {
-
-    }
 }

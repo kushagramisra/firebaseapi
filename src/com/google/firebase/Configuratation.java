@@ -9,7 +9,7 @@ import org.json.JSONObject;
 public interface Configuratation
 {
 
-    JSONObject jsonObject = new JSONObject();
+    JSONObject jsonConfigObj = new JSONObject();
 
     /*
     * This parameter identifies a group of messages (e.g., with collapse_key: "Updates Available")

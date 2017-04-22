@@ -3,9 +3,9 @@ package com.google.exceptions;
 /**
  * Created by MKushagra on 4/18/2017.
  */
-public class IllegalDeviceId extends Exception {
+public class IllegalDeviceIdException extends Exception {
 
-    public IllegalDeviceId(String exceptionString)
+    public IllegalDeviceIdException(String exceptionString)
     {
         super(exceptionString);
     }
