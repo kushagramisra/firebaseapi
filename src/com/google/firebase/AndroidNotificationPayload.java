@@ -5,7 +5,7 @@ package com.google.firebase;
  */
 public class AndroidNotificationPayload extends NotificationPayload
 {
-
+    
     /**
      * The notification's icon.
      * Sets the notification icon to myicon for drawable resource myicon. If you don't send this key in the request,
@@ -14,9 +14,9 @@ public class AndroidNotificationPayload extends NotificationPayload
      */
     public void addIcon(String iconLoaction)
     {
-        payloadData.put("icon",iconLoaction);
+        payloadData.put("icon", iconLoaction);
     }
-
+    
     /**
      * Identifier used to replace existing notifications in the notification drawer.
      * If not specified, each request creates a new notification.
@@ -25,16 +25,16 @@ public class AndroidNotificationPayload extends NotificationPayload
      */
     public void addtag(String tag)
     {
-        payloadData.put("tag",tag);
+        payloadData.put("tag", tag);
     }
-
+    
     /**
      * The notification's icon color, expressed in #rrggbb format.
      * @param color
      */
     public void addColor(String color)
     {
-        payloadData.put("color",color);
+        payloadData.put("color", color);
     }
-
+    
 }

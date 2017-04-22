@@ -8,9 +8,9 @@ import org.json.JSONObject;
  */
 public interface Configuratation
 {
-
+    
     JSONObject jsonConfigObj = new JSONObject();
-
+    
     /*
     * This parameter identifies a group of messages (e.g., with collapse_key: "Updates Available")
     * that can be collapsed, so that only the last message gets sent when delivery can be resumed.
@@ -23,7 +23,7 @@ public interface Configuratation
     * If you exceed this number, there is no guarantee which 4 collapse keys the FCM connection server will keep.
     ***/
     public void setCollapseKey(String collapseKey);
-
+    
     /*
      * Sets the priority of the message. Valid values are "normal" and "high." On iOS,
      * these correspond to APNs priorities 5 and 10.
@@ -37,8 +37,8 @@ public interface Configuratation
      * can wake a sleeping device and open a network connection to your server.
      */
     public void setPriority(String priority);
-
-
+    
+    
     /*
      * On iOS, use this field to represent content-available in the APNs payload.
      * When a notification or message is sent and this is set to true, an inactive
@@ -46,7 +46,7 @@ public interface Configuratation
      * On Chrome, currently not supported.*?
      */
     public void setAvailableContent(boolean isContentAvailable);
-
+    
     /**
      * Currently for iOS 10+ devices only. On iOS, use this field to represent mutable-content
      * in the APNS payload. When a notification is sent and this is set to true, the content of
@@ -54,22 +54,22 @@ public interface Configuratation
      * This parameter will be ignored for Android and web.
      */
     public void setMutableContent(boolean isMutableContent);
-
+    
     /**
      * This parameter specifies how long (in seconds) the message should be kept in FCM storage if the device is offline.
      * The maximum time to live supported is 4 weeks, and the default value is 4 weeks.
      */
     public void setTimeToLive(long timeToLive);
-
+    
     /**
      * This parameter specifies the package name of the application where the registration tokens must match in order to receive the message.
      */
     public void setRestrictedPackage(String restrictedPackage);
-
+    
     /**
      * This parameter, when set to true, allows developers to test a request without actually sending a message.
      * @param isDryRun
      */
     public void setDryRun(boolean isDryRun);
-
+    
 }

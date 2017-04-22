@@ -5,7 +5,7 @@ package com.google.firebase;
  */
 public class IOSNotificationPayload extends NotificationPayload
 {
-
+    
     /**
      * The value of the badge on the home screen app icon.
      * If not specified, the badge is not changed.
@@ -14,6 +14,6 @@ public class IOSNotificationPayload extends NotificationPayload
      */
     public void addBadge(String badge)
     {
-        payloadData.put("badge",badge);
+        payloadData.put("badge", badge);
     }
 }
