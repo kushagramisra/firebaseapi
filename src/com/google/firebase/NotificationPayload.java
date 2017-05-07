@@ -1,5 +1,8 @@
 package com.google.firebase;
 
+import java.util.Map;
+
+import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
@@ -88,6 +91,37 @@ public abstract class NotificationPayload
     public void addTitleLocArgs(String titleLocArgs)
     {
         payloadData.put("title_loc_args", titleLocArgs);
+    }
+    
+    /**
+     * Add custom payload map for Firebase push notification.
+     * @param customPayload
+     */
+    public void addCustomPayloadJson(JSONObject customPayload)
+    {
+        this.payloadData = mergeJSONObjects(customPayload,this.payloadData);
+    }
+    
+    /**
+     * Add custom payload map for Firebase push notification.
+     * @param customPayloadMap
+     */
+    public void addCustomPayloadMap(Map<String,String> customPayloadMap)
+    {
+        for(String o : customPayloadMap.keySet())
+        {
+            this.payloadData.put(o,customPayloadMap.get(o));
+        }
+    }
+    
+    private JSONObject mergeJSONObjects(JSONObject json1, JSONObject json2) {
+        JSONObject mergedJSON = new JSONObject();
+        mergedJSON = new JSONObject(json1, JSONObject.getNames(json1));
+        for (String crunchifyKey : JSONObject.getNames(json2))
+        {
+            mergedJSON.put(crunchifyKey, json2.get(crunchifyKey));
+        }
+        return mergedJSON;
     }
     
 }

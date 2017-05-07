@@ -3,11 +3,14 @@ package com.google.firebase;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
+import java.net.InetSocketAddress;
+import java.net.Proxy;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Properties;
 
 import org.json.JSONObject;
 
@@ -34,6 +37,17 @@ public abstract class FirebaseNotification
     private Configuratation configuratation = null;
     private NotificationPayload payload = null;
     private JSONObject finalJsonObj = new JSONObject();
+    private Proxy proxy = null;
+    
+    private Proxy getProxy()
+    {
+        return proxy;
+    }
+    
+    private void setProxy(Proxy proxy)
+    {
+        this.proxy = proxy;
+    }
     
     /**
      * This method is used to get the firebase configuration object and edit them if required.
@@ -46,7 +60,6 @@ public abstract class FirebaseNotification
             configuratation = new FirebaseConfiguration();
         }
         return configuratation;
-        
     }
     
     /**
@@ -114,16 +127,50 @@ public abstract class FirebaseNotification
         mergeJsonData();
         String firebaseJsonString = this.finalJsonObj.toString();
         String encodedData = URLEncoder.encode(firebaseJsonString, "UTF-8");
-        URL firebaseUrl = new URL("https://fcm.googleapis.com/fcm/send");
-        HttpURLConnection conn = (HttpURLConnection)firebaseUrl.openConnection();
+        HttpURLConnection conn = getHttpConnection();
         conn.setDoOutput(true);
         conn.setRequestMethod(POST);
         conn.setRequestProperty(AUTHORIZATION, KEY + apikey);
         conn.setRequestProperty(CONTENT_TYPE, APPLICATION_JSON);
         OutputStream os = conn.getOutputStream();
         os.write(encodedData.getBytes());
-        System.out.println("" + conn.getResponseCode() + "-->>" + conn.getResponseMessage());
-        
+    }
+    
+    private HttpURLConnection getHttpConnection() throws IOException
+    {
+        Proxy proxy = getProxy();
+        HttpURLConnection conn = null;
+        URL firebaseUrl = new URL("https://fcm.googleapis.com/fcm/send");
+        if(proxy != null)
+        {
+            conn = (HttpURLConnection)firebaseUrl.openConnection(proxy);
+        }
+        else
+        {
+            conn = (HttpURLConnection)firebaseUrl.openConnection();
+        }
+        return conn;
+    }
+    
+    /**
+     * Add proxy settings to firebase notification in case server is using proxy.
+     * @param hostname
+     * @param port
+     */
+    public void proxySettings(String hostname, String port)
+    {
+        proxySettings(hostname,Integer.valueOf(port));
+    }
+    
+    /**
+     * Add proxy settings to firebase notification in case server is using proxy.
+     * @param hostname
+     * @param port
+     */
+    public void proxySettings(String hostname, Integer port)
+    {
+        Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(hostname, port));
+        setProxy(proxy);
     }
     
     private void makeSendDeviceData() throws NoDeviceAddedException
